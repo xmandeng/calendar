@@ -4,8 +4,15 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Calendar, Upload, CreditCard, FileText } from "lucide-react"
+import { useEffect, useState } from "react"
 
 export function LandingPageComponent() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true")
+  }, [])
+
   return (
     <div className="flex flex-col min-h-screen bg-[#EDE8F5] text-[#3D52A0]">
       <header className="px-4 lg:px-6 h-14 flex items-center bg-[#7091E6] shadow-sm">
@@ -23,9 +30,15 @@ export function LandingPageComponent() {
           <Link className="text-sm font-medium hover:text-[#EDE8F5] hover:underline underline-offset-4" href="/easy-upload">
             Upload
           </Link>
-          <Link className="text-sm font-medium hover:text-[#EDE8F5] hover:underline underline-offset-4" href="/account">
-            Account
-          </Link>
+          {isLoggedIn ? (
+            <Link className="text-sm font-medium hover:text-[#EDE8F5] hover:underline underline-offset-4" href="/account">
+              Account
+            </Link>
+          ) : (
+            <Link className="text-sm font-medium hover:text-[#EDE8F5] hover:underline underline-offset-4" href="/login">
+              Sign In
+            </Link>
+          )}
         </nav>
       </header>
       <main className="flex-1">
